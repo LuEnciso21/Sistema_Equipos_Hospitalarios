@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block titulo %} .:. Index .:. {% endblock %}
+
+{% block Contenido %} 
+{% for patient in patients %}
+
+<div class="card" style="width: 18rem;">
+    <img class="card-img-top" src="{{patient.imagen.url}}" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title">{{patient.nombre}}</h5>
+      <p class="card-text">{{patient.nombre}} {{patient.apellido}} {{patient.correo}}</p>
+      <a href="https://www.google.com" target="_blank" class="btn btn-primary">Ver más...</a>
+    </div>
+  </div>
+  {% endfor %}
+
+<br><hr><br>
+
+<div class="card">
+    <div class="card-header">
+        <h1>Lista de pacientes en la base de datos</h1>
+    </div>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Documento</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Correo electrónico</th>
+                    <th>Foto</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for patient in patients %}
+                <tr>
+                    <td>{{patient.id}}</td>
+                    <td>{{patient.documento}}</td>
+                    <td>{{patient.nombre}}</td>
+                    <td>{{patient.apellido}}</td>
+                    <td>{{patient.correo}}</td>
+                    <td>
+                        <img src="{{patient.imagen.url}}" width="100">
+                    </td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="">
+                            <a name="" id="" class="btn btn-info" href="{% url 'editar' patient.id %}" role="button">Editar</a>
+                            <a name="" id="" class="btn btn-danger" href="{% url 'borrar' patient.id %}" role="button">Borrar</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="card-footer text-muted">
+        <h3>BioSoft Technologies</h3>
+    </div>
+</div>
+
+{% endblock %}

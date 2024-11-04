@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>{% block titulo %} {% endblock %}</title>
+    <style>
+        /* Fuente personalizada */
+        body {
+            font-family: 'Avenir', 'Helvetica', 'Arial', sans-serif; /* Aplica la fuente Avenir y alternativas */
+        }
+
+        .banner {
+            background-color: #90CAF9; /* Color de fondo azul claro */
+            position: relative;
+            height: 100px; /* Altura del banner */
+            display: flex; /* Flex para alinear los elementos */
+            align-items: center; /* Centra verticalmente el contenido */
+            padding: 0 10px; /* Espaciado a los lados */
+        }
+        .image-container {
+            height: 100%; 
+            width: auto; 
+            aspect-ratio: 4 / 1; 
+            overflow: hidden; 
+            position: relative; 
+        }
+        .image-container img {
+            height: 100%; 
+            width: 100%; 
+            object-fit: cover; 
+            position: absolute; 
+            left: 0; 
+            top: 0; 
+        }
+        .nav-buttons {
+            margin-left: auto;
+            display: flex; 
+        }
+        /* Cambia el color del texto de los botones a blanco y sin fondo */
+        .nav-buttons .btn {
+            color: white; /* Color del texto */
+            background-color: transparent; /* Fondo transparente */
+            border: none; /* Sin borde */
+            padding: 0.5rem 1rem; /* Espaciado dentro del botón */
+        }
+        .nav-buttons .btn:hover {
+            color: #e0e0e0; 
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <div class="image-container">
+            <img src="https://i.pinimg.com/564x/60/72/a5/6072a5d3397dd6ae6b2c70ebdf689e27.jpg" alt="Logo de Biosoft">
+        </div>
+        <div class="nav-buttons">
+            <a href="{% url 'inicio' %}" class="btn">INICIO</a>
+            <a href="{% url 'about' %}" class="btn">NOSOTROS</a>
+            <a href="{% url 'patients' %}" class="btn">CONSULTAR</a>
+            <a href="{% url 'crear' %}" class="btn">INGRESAR RESPONSBALE</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                {% block Contenido %}{% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

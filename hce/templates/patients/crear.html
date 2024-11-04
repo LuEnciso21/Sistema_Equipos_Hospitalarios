@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block titulo %} .:. Index .:. {% endblock %}
+
+{% block Contenido %} 
+
+<div class="card">
+    <div class="card-header">
+        <h1>Ingresar Nuevo Responsable</h1>
+    </div>
+    <div class="card-body">
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="">Documento</label>
+              <input type="text" name="documento" id="documento" class="form-control" placeholder="" aria-describedby="helpId">
+            </div>
+            <div class="form-group">
+                <label for="">Nombre</label>
+                <input type="text" name="nombre" id="nombre" class="form-control" placeholder="" aria-describedby="helpId">
+              </div>
+              <div class="form-group">
+                <label for="">Apellido</label>
+                <input type="text" name="apellido" id="apellido" class="form-control" placeholder="" aria-describedby="helpId">
+              </div>
+              <div class="form-group">
+                <label for="">Correo electrónico</label>
+                <input type="text" name="correo" id="correo" class="form-control" placeholder="" aria-describedby="helpId">
+              </div>
+
+              <div class="form-group">
+                <label for="">Foto</label>
+                <input type="file" name="imagen" id="imagen" class="form-control" >
+              </div>
+
+              <br><br>
+              <button type="submit" class="btn btn-primary">Crear</button>
+              <a name="" id="" class="btn btn-warning" href="{% url 'patients' %}" role="button">Cancelar</a>
+        </form>
+        
+        
+    </div>
+    <div class="card-footer text-muted">
+        <h3>BioSoft Technologies</h3>
+    </div>
+</div>
+
+{% endblock %}
