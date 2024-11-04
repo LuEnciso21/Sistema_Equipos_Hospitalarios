@@ -5,9 +5,10 @@ from django.contrib.staticfiles.urls import static
 
 urlpatterns = [
     path('', views.inicio, name='inicio'),
-    path('about' , views.about , name='about'),
-    path('patients' , views.patients, name='patients'),
-    path('patients/crear' , views.crear, name='crear'),
-    path('borrar/<int:id>' , views.borrar, name='borrar'),
-    path('patients/editar/<int:id>' , views.editar, name='editar'),
-] + static(settings.MEDIA_URL , document_root=settings.MEDIA_ROOT)
+    path('about', views.about, name='about'),
+    path('consultar', views.consultar, name='consultar'),  # Nueva ruta para la vista consultar
+    path('patients', views.patients, name='patients'),
+    path('patients/crear', views.crear, name='crear'),
+    path('borrar/<int:id>', views.borrar, name='borrar'),
+    path('patients/editar/<int:id>', views.editar, name='editar'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

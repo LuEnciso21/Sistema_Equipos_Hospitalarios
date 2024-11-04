@@ -6,9 +6,9 @@
 
 <br><hr><br>
 
-<div class="card">
+<div class="card text-center">
     <div class="card-header">
-        <h1>Lista de pacientes en la base de datos</h1>
+        <h1>Responsables de los Equipos</h1>
     </div>
     <div class="card-body">
         <table class="table">
@@ -31,12 +31,13 @@
                     <td>{{patient.apellido}}</td>
                     <td>{{patient.correo}}</td>
                     <td>
-                        <img src="{{patient.imagen.url}}" width="100">
-                    </td>
-                    <td>
-                        <div class="btn-group" role="group" aria-label="">
-                            <a name="" id="" class="btn btn-info" href="{% url 'editar' patient.id %}" role="button">Editar</a>
-                            <a name="" id="" class="btn btn-danger" href="{% url 'borrar' patient.id %}" role="button">Borrar</a>
+                        <div class="btn-group" role="group" aria-label="" style="display: flex; gap: 10px; justify-content: center;">
+                            <a name="" id="" class="btn" href="{% url 'editar' patient.id %}" role="button" style="background-color: #90CAF9; border: none; color: #0D47A1; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                                Editar
+                            </a>
+                            <a name="" id="" class="btn" href="{% url 'borrar' patient.id %}" role="button" style="background-color: #EF9A9A; border: none; color: #C62828; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                                Borrar
+                            </a>
                         </div>
                     </td>
                 </tr>
@@ -44,8 +45,12 @@
             </tbody>
         </table>
     </div>
-    <div class="card-footer text-muted">
+    <div class="card-footer text-muted text-center">
         <h3>BioSoft Technologies</h3>
+        <!-- Botón Volver -->
+        <a href="{% url 'consultar' %}" class="btn" role="button" style="background-color: #81C784; border: none; color: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); margin-top: 10px;">
+            Volver
+        </a>
     </div>
 </div>
 
