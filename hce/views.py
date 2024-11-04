@@ -20,11 +20,19 @@ def patients(request):
     return render(request , 'patients/index.html', {'patients':paciente})
 
 def crear(request):
-    infoPatient = PatientForm(request.POST or None , request.FILES or None)
-    if infoPatient.is_valid():
+    infoPatient = PatientForm(request.POST or None, request.FILES or None)
+    success_message = None  # Variable para el mensaje de éxito
+
+    if request.method == 'POST' and infoPatient.is_valid():
         infoPatient.save()
-        return redirect('patients')
-    return render(request, 'patients/crear.html')
+        success_message = "Responsable guardado exitosamente."  # Establecer el mensaje de éxito
+        infoPatient = PatientForm()  # Reiniciar el formulario
+
+    return render(request, 'patients/crear.html', {
+        'infoPatient': infoPatient,
+        'success_message': success_message  # Pasar el mensaje de éxito al template
+    })
+
 
 def borrar(request, id):
     paciente = Patient.objects.get(id=id)

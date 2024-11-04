@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block titulo %} .:. Index .:. {% endblock %}
+{% block titulo %} .:. Ingresar Responsable .:. {% endblock %}
 
 {% block Contenido %}
 
@@ -11,27 +11,29 @@
         </div>
         <div class="card-body">
             <!-- Mensaje de éxito -->
-            <div id="success-message" class="alert alert-success d-none text-center" role="alert">
-                Responsable guardado exitosamente.
+            {% if success_message %}
+            <div class="alert alert-success text-center" role="alert">
+                {{ success_message }}
             </div>
+            {% endif %}
 
             <form id="responsableForm" action="" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="documento">Documento</label>
-                    <input type="text" name="documento" id="documento" class="form-control" required>
+                    <input type="text" name="documento" id="documento" class="form-control" value="{{ infoPatient.instance.documento }}" required>
                 </div>
                 <div class="form-group">
                     <label for="nombre">Nombre</label>
-                    <input type="text" name="nombre" id="nombre" class="form-control" required>
+                    <input type="text" name="nombre" id="nombre" class="form-control" value="{{ infoPatient.instance.nombre }}" required>
                 </div>
                 <div class="form-group">
                     <label for="apellido">Apellido</label>
-                    <input type="text" name="apellido" id="apellido" class="form-control" required>
+                    <input type="text" name="apellido" id="apellido" class="form-control" value="{{ infoPatient.instance.apellido }}" required>
                 </div>
                 <div class="form-group">
                     <label for="correo">Correo electrónico</label>
-                    <input type="email" name="correo" id="correo" class="form-control" required>
+                    <input type="email" name="correo" id="correo" class="form-control" value="{{ infoPatient.instance.correo }}" required>
                 </div>
 
                 <div id="error-message" class="alert alert-danger d-none text-center">
