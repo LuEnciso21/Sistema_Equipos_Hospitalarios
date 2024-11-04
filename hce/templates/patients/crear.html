@@ -4,41 +4,54 @@
 
 {% block Contenido %}
 
-<div class="card">
-    <div class="card-header">
-        <h1>Ingresar Nuevo Responsable</h1>
-    </div>
-    <div class="card-body">
-        <form id="responsableForm" action="" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="documento">Documento</label>
-                <input type="text" name="documento" id="documento" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="nombre">Nombre</label>
-                <input type="text" name="nombre" id="nombre" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="apellido">Apellido</label>
-                <input type="text" name="apellido" id="apellido" class="form-control" required>
-            </div>
-            <div class="form-group">
-                <label for="correo">Correo electrónico</label>
-                <input type="email" name="correo" id="correo" class="form-control" required>
+<div class="container mt-5">
+    <div class="card shadow form-container" style="max-width: 600px; margin: 0 auto;">
+        <div class="card-header text-center">
+            <h4>Ingresar Responsable</h4>
+        </div>
+        <div class="card-body">
+            <!-- Mensaje de éxito -->
+            <div id="success-message" class="alert alert-success d-none text-center" role="alert">
+                Responsable guardado exitosamente.
             </div>
 
-            <br><br>
-            <div id="error-message" class="alert alert-danger d-none">
-                Por favor complete todos los campos antes de enviar el formulario.
-            </div>
+            <form id="responsableForm" action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="documento">Documento</label>
+                    <input type="text" name="documento" id="documento" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" name="nombre" id="nombre" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="apellido">Apellido</label>
+                    <input type="text" name="apellido" id="apellido" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="correo">Correo electrónico</label>
+                    <input type="email" name="correo" id="correo" class="form-control" required>
+                </div>
 
-            <button type="submit" id="submitButton" class="btn btn-primary">Guardar</button>
-            <a name="" id="" class="btn btn-warning" href="{% url 'patients' %}" role="button">Cancelar</a>
-        </form>
-    </div>
-    <div class="card-footer text-muted">
-        <h3>BioSoft Technologies</h3>
+                <div id="error-message" class="alert alert-danger d-none text-center">
+                    Por favor complete todos los campos antes de enviar el formulario.
+                </div>
+
+                <!-- Botones -->
+                <div class="btn-group d-flex justify-content-center" role="group" style="margin-top: 20px;">
+                    <button type="submit" id="submitButton" class="btn" style="background-color: #90CAF9; border: none; color: #0D47A1; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); margin-right: 10px;">
+                        Guardar
+                    </button>
+                    <button type="button" class="btn" style="background-color: #BDBDBD; border: none; color: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);" onclick="window.location.href='{% url 'inicio' %}'">
+                        Cancelar
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer text-muted text-center">
+            BioSoft Technologies
+        </div>
     </div>
 </div>
 
@@ -47,6 +60,7 @@
     const inputs = form.querySelectorAll('input');
     const submitButton = document.getElementById('submitButton');
     const errorMessage = document.getElementById('error-message');
+    const successMessage = document.getElementById('success-message');
 
     // Función que verifica si todos los campos están llenos
     function checkFormCompletion() {
@@ -66,13 +80,18 @@
         if (!checkFormCompletion()) {
             event.preventDefault(); // Detener el envío
             errorMessage.classList.remove('d-none'); // Mostrar mensaje de error
+            successMessage.classList.add('d-none'); // Asegurarse que el mensaje de éxito esté oculto
+        } else {
+            successMessage.classList.remove('d-none'); // Mostrar mensaje de éxito si el formulario se envía correctamente
+            errorMessage.classList.add('d-none'); // Ocultar mensaje de error
         }
     });
 
     // También podemos ocultar el mensaje de error cada vez que el usuario empiece a completar los campos
     inputs.forEach(input => {
         input.addEventListener('input', () => {
-            errorMessage.classList.add('d-none'); // Ocultar mensaje de error cuando empiecen a llenar los campos
+            errorMessage.classList.add('d-none'); // Ocultar mensaje de error
+            successMessage.classList.add('d-none'); // Ocultar mensaje de éxito si se modifica el formulario
         });
     });
 </script>

@@ -34,7 +34,14 @@ def borrar(request, id):
 def editar(request, id):
     paciente = Patient.objects.get(id=id)
     formPatient = PatientForm(request.POST or None, request.FILES or None, instance=paciente)
-    if formPatient.is_valid() and request.method == 'POST':
+    success_message = None  # Variable para el mensaje de éxito
+
+    if request.method == 'POST' and formPatient.is_valid():
         formPatient.save()
-        return redirect('patients')
-    return render(request, 'patients/editar.html' , {'formPatient':formPatient})
+        success_message = "Responsable editado exitosamente."  # Establecer el mensaje de éxito
+
+    return render(request, 'patients/editar.html', {
+        'formPatient': formPatient,
+        'success_message': success_message  # Pasar el mensaje de éxito al template
+    })
+

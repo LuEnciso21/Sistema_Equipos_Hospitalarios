@@ -25,19 +25,19 @@
             <tbody>
                 {% for patient in patients %}
                 <tr>
-                    <td>{{patient.id}}</td>
-                    <td>{{patient.documento}}</td>
-                    <td>{{patient.nombre}}</td>
-                    <td>{{patient.apellido}}</td>
-                    <td>{{patient.correo}}</td>
+                    <td>{{ patient.id }}</td>
+                    <td>{{ patient.documento }}</td>
+                    <td>{{ patient.nombre }}</td>
+                    <td>{{ patient.apellido }}</td>
+                    <td>{{ patient.correo }}</td>
                     <td>
                         <div class="btn-group" role="group" aria-label="" style="display: flex; gap: 10px; justify-content: center;">
-                            <a name="" id="" class="btn" href="{% url 'editar' patient.id %}" role="button" style="background-color: #90CAF9; border: none; color: #0D47A1; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                            <a class="btn" href="{% url 'editar' patient.id %}" role="button" style="background-color: #90CAF9; border: none; color: #0D47A1; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
                                 Editar
                             </a>
-                            <a name="" id="" class="btn" href="{% url 'borrar' patient.id %}" role="button" style="background-color: #EF9A9A; border: none; color: #C62828; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                            <button class="btn" data-id="{{ patient.id }}" style="background-color: #EF9A9A; border: none; color: #C62828; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);" onclick="confirmDelete(this)">
                                 Borrar
-                            </a>
+                            </button>
                         </div>
                     </td>
                 </tr>
@@ -53,5 +53,48 @@
         </a>
     </div>
 </div>
+
+<!-- Modal de Confirmación de Borrado -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirmación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Está seguro de que desea borrar este responsable?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" style="background-color: #BDBDBD; border: none; color: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn" style="background-color: #EF9A9A; border: none; color: #C62828; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);" id="confirmDeleteButton">Borrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let patientIdToDelete;
+
+    function confirmDelete(button) {
+        patientIdToDelete = button.getAttribute('data-id'); // Almacena el ID del paciente a eliminar
+        var modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+        modal.show(); // Muestra el modal
+    }
+
+    document.getElementById('confirmDeleteButton').addEventListener('click', function() {
+        if (patientIdToDelete) {
+            fetch(`{% url 'borrar' 0 %}`.replace(/0$/, patientIdToDelete), { method: 'POST', headers: {'X-CSRFToken': '{{ csrf_token }}' }})
+                .then(response => {
+                    if (response.ok) {
+                        location.reload(); // Recarga la página después de borrar
+                    } else {
+                        alert('Error al eliminar el paciente.');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    });
+</script>
 
 {% endblock %}
