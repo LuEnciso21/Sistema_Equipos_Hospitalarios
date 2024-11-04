@@ -12,6 +12,9 @@ def inicio(request):
 def about(request):
     return render(request, 'pages/about.html')
 
+def consultar(request):
+    return render(request, 'patients/consultar.html')
+
 def patients(request):
     paciente = Patient.objects.all()
     return render(request , 'patients/index.html', {'patients':paciente})

@@ -2,47 +2,79 @@
 
 {% block titulo %} .:. Index .:. {% endblock %}
 
-{% block Contenido %} 
+{% block Contenido %}
 
 <div class="card">
     <div class="card-header">
         <h1>Ingresar Nuevo Responsable</h1>
     </div>
     <div class="card-body">
-        <form action="" method="post" enctype="multipart/form-data">
+        <form id="responsableForm" action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group">
-              <label for="">Documento</label>
-              <input type="text" name="documento" id="documento" class="form-control" placeholder="" aria-describedby="helpId">
+                <label for="documento">Documento</label>
+                <input type="text" name="documento" id="documento" class="form-control" required>
             </div>
             <div class="form-group">
-                <label for="">Nombre</label>
-                <input type="text" name="nombre" id="nombre" class="form-control" placeholder="" aria-describedby="helpId">
-              </div>
-              <div class="form-group">
-                <label for="">Apellido</label>
-                <input type="text" name="apellido" id="apellido" class="form-control" placeholder="" aria-describedby="helpId">
-              </div>
-              <div class="form-group">
-                <label for="">Correo electrónico</label>
-                <input type="text" name="correo" id="correo" class="form-control" placeholder="" aria-describedby="helpId">
-              </div>
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" id="nombre" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="apellido">Apellido</label>
+                <input type="text" name="apellido" id="apellido" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="correo">Correo electrónico</label>
+                <input type="email" name="correo" id="correo" class="form-control" required>
+            </div>
 
-              <div class="form-group">
-                <label for="">Foto</label>
-                <input type="file" name="imagen" id="imagen" class="form-control" >
-              </div>
+            <br><br>
+            <div id="error-message" class="alert alert-danger d-none">
+                Por favor complete todos los campos antes de enviar el formulario.
+            </div>
 
-              <br><br>
-              <button type="submit" class="btn btn-primary">Crear</button>
-              <a name="" id="" class="btn btn-warning" href="{% url 'patients' %}" role="button">Cancelar</a>
+            <button type="submit" id="submitButton" class="btn btn-primary">Guardar</button>
+            <a name="" id="" class="btn btn-warning" href="{% url 'patients' %}" role="button">Cancelar</a>
         </form>
-        
-        
     </div>
     <div class="card-footer text-muted">
         <h3>BioSoft Technologies</h3>
     </div>
 </div>
+
+<script>
+    const form = document.getElementById('responsableForm');
+    const inputs = form.querySelectorAll('input');
+    const submitButton = document.getElementById('submitButton');
+    const errorMessage = document.getElementById('error-message');
+
+    // Función que verifica si todos los campos están llenos
+    function checkFormCompletion() {
+        let allFilled = true;
+        inputs.forEach(input => {
+            if (input.value === '') {
+                allFilled = false;
+            }
+        });
+
+        return allFilled;
+    }
+
+    // Manejar el evento de envío del formulario
+    form.addEventListener('submit', function(event) {
+        // Evitar el envío del formulario si los campos no están completos
+        if (!checkFormCompletion()) {
+            event.preventDefault(); // Detener el envío
+            errorMessage.classList.remove('d-none'); // Mostrar mensaje de error
+        }
+    });
+
+    // También podemos ocultar el mensaje de error cada vez que el usuario empiece a completar los campos
+    inputs.forEach(input => {
+        input.addEventListener('input', () => {
+            errorMessage.classList.add('d-none'); // Ocultar mensaje de error cuando empiecen a llenar los campos
+        });
+    });
+</script>
 
 {% endblock %}

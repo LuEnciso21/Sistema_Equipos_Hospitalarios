@@ -3,17 +3,6 @@
 {% block titulo %} .:. Index .:. {% endblock %}
 
 {% block Contenido %} 
-{% for patient in patients %}
-
-<div class="card" style="width: 18rem;">
-    <img class="card-img-top" src="{{patient.imagen.url}}" alt="Card image cap">
-    <div class="card-body">
-      <h5 class="card-title">{{patient.nombre}}</h5>
-      <p class="card-text">{{patient.nombre}} {{patient.apellido}} {{patient.correo}}</p>
-      <a href="https://www.google.com" target="_blank" class="btn btn-primary">Ver más...</a>
-    </div>
-  </div>
-  {% endfor %}
 
 <br><hr><br>
 
@@ -30,7 +19,6 @@
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>Correo electrónico</th>
-                    <th>Foto</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
