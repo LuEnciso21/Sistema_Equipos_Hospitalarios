@@ -84,7 +84,10 @@
 
     document.getElementById('confirmDeleteButton').addEventListener('click', function() {
         if (patientIdToDelete) {
-            fetch(`{% url 'borrar' 0 %}`.replace(/0$/, patientIdToDelete), { method: 'POST', headers: {'X-CSRFToken': '{{ csrf_token }}' }})
+            fetch(`{% url 'borrar' 0 'paciente' %}`.replace('0', patientIdToDelete), {
+                method: 'POST',
+                headers: { 'X-CSRFToken': '{{ csrf_token }}' }
+            })
                 .then(response => {
                     if (response.ok) {
                         location.reload(); // Recarga la página después de borrar

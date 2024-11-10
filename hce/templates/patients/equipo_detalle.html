@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block titulo %} Detalle de Equipo {% endblock %}
+
+{% block Contenido %}
+<div class="container mt-5">
+    <div class="card shadow" style="max-width: 600px; margin: 0 auto;">
+        <div class="card-header text-center">
+            <h4>{{ equipo.nombre }}</h4>
+        </div>
+        <div class="card-body">
+            {% if equipo.foto %}
+                <img src="{{ equipo.foto.url }}" class="img-fluid mb-3" alt="{{ equipo.nombre }}" style="max-height: 300px; object-fit: cover;">
+            {% endif %}
+            <p><strong>Marca:</strong> {{ equipo.marca }}</p>
+            <p><strong>Modelo:</strong> {{ equipo.modelo }}</p>
+            <p><strong>Serial:</strong> {{ equipo.serial }}</p>
+            <p><strong>Área:</strong> {{ equipo.area }}</p>
+            <p><strong>Responsable:</strong>{{equipo.responsable}}</p>
+
+            <!-- Botones de acción (Editar y Volver juntos) -->
+            <div class="d-flex justify-content-center mt-4" style="gap: 10px;">
+                <a class="btn" href="{% url 'editar_equipo' equipo.id %}" role="button" style="background-color: #90CAF9; border: none; color: #0D47A1; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    Editar
+                </a>
+                <a class="btn" href="{% url 'equipos' %}" role="button" style="background-color: #81C784; border: none; color: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    Volver
+                </a>
+            </div>
+        </div>
+        <div class="card-footer text-muted text-center">
+            BioSoft Technologies
+        </div>
+    </div>
+</div>
+{% endblock %}

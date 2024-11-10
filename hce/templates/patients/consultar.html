@@ -1,22 +1,82 @@
 {% extends "base.html" %}
 
-{% block titulo %} Consultar Responsable {% endblock %}
+{% block titulo %} Consultar {% endblock %}
 
 {% block Contenido %}
-<div class="row justify-content-center mt-5">
-  <!-- Primera Card (activa) -->
-  <div class="col-md-6">
-    <div class="card text-center">
-      <img src="https://cdn.lecturio.com/assets/Featured-image-Student-Blog-Hospital-Team.jpg" class="card-img-top" alt="Responsable Image">
-      <div class="card-body">
-        <h5 class="card-title">Consultar Responsable</h5>
-        <p class="card-text">Haz clic en el botón para ver el listado de responsables.</p>
-        <!-- Botón con estilo personalizado -->
-        <a href="{% url 'patients' %}" class="btn btn-primary" style="background-color: #81D4FA; border: none; color: #0D47A1; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
-          Buscar
-        </a>
+<div class="container mt-5">
+  <!-- Mostrar mensaje de éxito -->
+  {% if messages %}
+      {% for message in messages %}
+          <div class="alert alert-success text-center" role="alert">
+              {{ message }}
+          </div>
+      {% endfor %}
+  {% endif %}
+
+  <div class="d-flex justify-content-center align-items-center flex-column">
+    <div class="row justify-content-center text-center">
+      <!-- Card para Consultar Responsable -->
+      <div class="col-md-4 mb-4">
+        <div class="card shadow-sm border-0">
+          <img src="https://cdn.lecturio.com/assets/Featured-image-Student-Blog-Hospital-Team.jpg" class="card-img-top img-fluid" alt="Responsable Image">
+          <div class="card-body">
+            <h5 class="card-title text-primary">Consultar Responsable</h5>
+            <p class="card-text">Haz clic en el botón para ver el listado de responsables.</p>
+            <a href="{% url 'patients' %}" class="btn btn-primary custom-btn">
+              Buscar Responsable
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card para Consultar Equipos -->
+      <div class="col-md-4 mb-4">
+        <div class="card shadow-sm border-0">
+          <img src="https://fastfwdus.com/wp-content/uploads/2022/03/Medical-Device-Translation-Services-1024x640.jpg" class="card-img-top img-fluid" alt="Equipos Image">
+          <div class="card-body">
+            <h5 class="card-title text-primary">Consultar Activos</h5>
+            <p class="card-text">Haz clic en el botón para ver el listado de activos disponibles.</p>
+            <a href="{% url 'equipos' %}" class="btn btn-primary custom-btn">
+              Buscar Activos
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+<style>
+  .card {
+    overflow: hidden;
+    height: 100%;
+    border-radius: 15px;
+  }
+
+  .card-img-top {
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .card:hover .card-img-top {
+    transform: scale(1.05);
+  }
+
+  .card-title {
+    font-size: 1.5rem;
+  }
+
+  .card-text {
+    font-size: 1rem;
+  }
+
+  .custom-btn {
+    background-color: #81D4FA;
+    border: none;
+    color: #0D47A1;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+</style>
 {% endblock %}

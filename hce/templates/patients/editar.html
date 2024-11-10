@@ -21,19 +21,19 @@
               {% csrf_token %}
               <div class="form-group">
                   <label for="documento">Documento</label>
-                  <input type="text" name="documento" id="documento" class="form-control" value="{{ formPatient.instance.documento }}" required>
+                  <input type="text" name="documento" id="documento" class="form-control" value="{{ form.instance.documento }}" required>
               </div>
               <div class="form-group">
                   <label for="nombre">Nombre</label>
-                  <input type="text" name="nombre" id="nombre" class="form-control" value="{{ formPatient.instance.nombre }}" required>
+                  <input type="text" name="nombre" id="nombre" class="form-control" value="{{ form.instance.nombre }}" required>
               </div>
               <div class="form-group">
                   <label for="apellido">Apellido</label>
-                  <input type="text" name="apellido" id="apellido" class="form-control" value="{{ formPatient.instance.apellido }}" required>
+                  <input type="text" name="apellido" id="apellido" class="form-control" value="{{ form.instance.apellido }}" required>
               </div>
               <div class="form-group">
                   <label for="correo">Correo electrónico</label>
-                  <input type="email" name="correo" id="correo" class="form-control" value="{{ formPatient.instance.correo }}" required>
+                  <input type="email" name="correo" id="correo" class="form-control" value="{{ form.instance.correo }}" required>
               </div>
 
               <div id="error-message" class="alert alert-danger d-none text-center">
@@ -45,7 +45,7 @@
                   <button type="submit" id="submitButton" class="btn" style="background-color: #90CAF9; border: none; color: #0D47A1; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); margin-right: 10px;">
                       Guardar
                   </button>
-                  <button type="button" class="btn" style="background-color: #BDBDBD; border: none; color: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);" onclick="window.location.href='{% url 'patients' %}'">
+                  <button type="button" class="btn" style="background-color: #81C784; border: none; color: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);" onclick="window.location.href='{% url 'patients' %}'">
                       Volver
                   </button>
               </div>
@@ -56,6 +56,7 @@
       </div>
   </div>
 </div>
+
 
 <script>
     const form = document.getElementById('responsableForm');

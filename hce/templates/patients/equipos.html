@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block titulo %} .:. Equipos .:. {% endblock %}
+
+{% block Contenido %}
+<div class="container mt-5">
+    <!-- Botones de área -->
+    <div class="d-flex justify-content-around mb-4">
+        <button class="btn btn-primary" onclick="cargarEquipos('Biomédica')">Biomédica</button>
+        <button class="btn btn-secondary" onclick="cargarEquipos('Infraestructura')">Infraestructura</button>
+        <button class="btn btn-info" onclick="cargarEquipos('Sistemas')">Sistemas</button>
+    </div>
+
+    <!-- Contenedor de tarjetas -->
+    <div id="contenedor-equipos" class="row">
+        <!-- Aquí se cargarán los v-cards -->
+    </div>
+</div>
+
+<!-- Modal de Confirmación de Borrado -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirmación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Está seguro de que desea borrar este equipo?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" style="background-color: #BDBDBD; border: none; color: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn" style="background-color: #EF9A9A; border: none; color: #C62828; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);" id="confirmDeleteButton">Borrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let equipoIdToDelete;
+
+    // Función para abrir el modal de confirmación y almacenar el ID del equipo
+    function confirmDelete(button) {
+        equipoIdToDelete = button.getAttribute('data-id');
+        var modal = new bootstrap.Modal(document.getElementById('deleteModal'));
+        modal.show();
+    }
+
+    // Confirmar eliminación y recargar la página
+    document.getElementById('confirmDeleteButton').addEventListener('click', function() {
+        if (equipoIdToDelete) {
+            fetch(`/borrar/${equipoIdToDelete}/activo/`, {
+                method: 'POST',
+                headers: { 'X-CSRFToken': '{{ csrf_token }}' }
+            })
+            .then(response => {
+                if (response.ok) {
+                    location.reload();  // Recarga la página después de borrar el equipo
+                } else {
+                    alert('Error al eliminar el equipo.');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    });
+
+    // Función para cargar equipos según el área seleccionada
+    function cargarEquipos(area) {
+        fetch(`/equipos_area/${area}/`)
+            .then(response => response.json())
+            .then(data => {
+                const contenedor = document.getElementById('contenedor-equipos');
+                contenedor.innerHTML = '';
+
+                // Verifica si se encontraron equipos para el área
+                if (data.equipos && data.equipos.length > 0) {
+                    data.equipos.forEach(equipo => {
+                        const card = document.createElement('div');
+                        card.className = 'col-md-4 mb-3';
+
+                        // Contenido de la tarjeta con los datos del equipo
+                        card.innerHTML = `
+                            <div class="card shadow" id="equipo-${equipo.id}">
+                                ${equipo.foto_url ? `<img src="${equipo.foto_url}" class="card-img-top equipo-img" alt="${equipo.nombre}">` : ''}
+                                <div class="card-body">
+                                    <h5 class="card-title">${equipo.nombre}</h5>
+                                    <p class="card-text"><strong>Marca:</strong> ${equipo.marca}</p>
+                                    <div class="d-flex justify-content-center" style="gap: 10px;">
+                                        <a href="/equipo_detalle/${equipo.id}/" class="btn" style="background-color: #90CAF9; border: none; color: #0D47A1; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">Ver más</a>
+                                        <button class="btn" data-id="${equipo.id}" style="background-color: #EF9A9A; border: none; color: #C62828; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);" onclick="confirmDelete(this)">Borrar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        contenedor.appendChild(card);
+                    });
+                } else {
+                    contenedor.innerHTML = `<p class="text-danger">No se encontraron equipos en esta área.</p>`;
+                }
+            })
+            .catch(error => {
+                console.error("Error al cargar los equipos:", error);
+                const contenedor = document.getElementById('contenedor-equipos');
+                contenedor.innerHTML = `<p class="text-danger">No se pudieron cargar los equipos. Intente nuevamente más tarde.</p>`;
+            });
+    }
+</script>
+
+<style>
+    /* Estilo para unificar el tamaño de las imágenes */
+    .equipo-img {
+        width: 100%;
+        height: 200px; /* Ajusta la altura deseada */
+        object-fit: cover; /* Mantiene la proporción de la imagen */
+    }
+</style>
+{% endblock %}
