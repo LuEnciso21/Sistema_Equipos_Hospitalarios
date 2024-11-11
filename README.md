@@ -55,11 +55,11 @@ Asegurese de tener una base de datos MySQL configurada y actualiza las configura
 
 `python manage.py migrate`
 
-# Integrantes
-
-Luisa Enciso - Santiago Rivera - Mateo Quintero
-
 
 # 6. Ejecuta el servidor de desarrollo:
 
 `python manage.py runserver`
+
+# Integrantes
+
+Luisa Enciso - Santiago Rivera - Mateo Quintero
