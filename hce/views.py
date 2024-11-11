@@ -64,18 +64,21 @@ def editar(request, id):
 def editar_equipo(request, id):
     instance = get_object_or_404(Activo, id=id)
     form = ActivoForm(request.POST or None, request.FILES or None, instance=instance)
-    template = 'patients/editar_equipo.html'  # Cambia a la plantilla adecuada
     success_message = "Equipo editado exitosamente."
+
+    # Obtener URL completa de la imagen
+    foto_url = request.build_absolute_uri(instance.foto.url) if instance.foto else None
 
     if request.method == 'POST' and form.is_valid():
         form.save()
         messages.success(request, success_message)
-        return redirect('equipos')  # Redirige a la URL deseada después de editar
+        return redirect('consultar')  # Redirige a la URL deseada después de editar
 
-    return render(request, template, {'form': form})
-
-
-
+    return render(request, 'patients/editar_equipo.html', {
+        'form': form,
+        'instance': instance,
+        'foto_url': foto_url  # Pasar la URL de la imagen a la plantilla
+    })
 
 # Vista para ingresar un activo
 def ingresar_activo(request):

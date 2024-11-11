@@ -44,30 +44,33 @@
                     </select>
                 </div>
 
-                <!-- Responsable --> 
                 <div class="form-group">
                     <label for="responsable">Responsable</label>
                     <select name="responsable" id="responsable" class="form-control" required>
-                        <option value="">Seleccione un responsable</option>
+                        <option value="{{ form.responsable.value }}">{{ form.responsable.value }}</option> -->
                         {% for paciente in form.responsable.field.queryset %}
                             <option value="{{ paciente.id }}" {% if form.responsable.value == paciente.id %} selected {% endif %}>
-                                {{ paciente.nombre }}  
+                                {{ paciente.nombre }}
                             </option>
                         {% endfor %}
                     </select>
                 </div>
-
+                
+                
                 
 
                 <!-- Campo para subir una foto -->
                 <div class="form-group">
                     <label for="foto">Foto del Equipo</label>
-                    <input type="file" name="foto" id="foto" class="form-control" accept="image/*">
-                    {% if form.foto.value %}
+                    <input type="file" name="foto" id="foto" class="form-control"  accept="image/*  ">
+                    <div class="mt-2"><strong>Archivo cargado:</strong> {{ form.foto.value}}</div>
+
+                    {% if foto_url %}
                         <div class="mt-3">
-                            <img src="{{ form.foto.value.url }}" alt="Foto del equipo" class="img-fluid" style="max-height: 200px;">
+                            <img src="{{ foto_url }}" alt="Foto del equipo" class="img-fluid" style="max-height: 200px;">
                         </div>
                     {% endif %}
+                    
                 </div>
 
                 <div id="error-message" class="alert alert-danger d-none text-center">
@@ -97,15 +100,15 @@
     const submitButton = document.getElementById('submitButton');
     const errorMessage = document.getElementById('error-message');
 
-    // Verificar si todos los campos están llenos
     function checkFormCompletion() {
-        let allFilled = true;
-        inputs.forEach(input => {
-            if (input.value === '') {
-                allFilled = false;
-            }
-        });
-        return allFilled;
+        const fotoUrlInput = document.getElementById('foto_url');
+        
+        // Si no se ha seleccionado un nuevo archivo, se mantiene el valor de foto_url
+        if (fotoInput.files.length === 0 && fotoUrlInput.value) {
+            // Se mantiene el valor de foto_url si no hay archivo seleccionado
+            fotoUrlInput.value = fotoUrlInput.value;
+        }
+        return true;  // Continuar enviando el formulario
     }
 
     // Manejo del envío del formulario
